@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "642932231505",
+    "project_id": "personal-task-manager-c526b",
+    "storage_bucket": "personal-task-manager-c526b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642932231505:android:7590eb61310fef73dc5770",
+        "android_client_info": {
+          "package_name": "com.inshadiqbal.personaltaskmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ-xNtN1_kscOT4cQlk-3F45SRAki-rF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
