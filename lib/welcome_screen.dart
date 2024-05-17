@@ -7,6 +7,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'provider_engine.dart';
 import 'package:provider/provider.dart';
 import 'buttons.dart';
+import 'package:alarm/alarm.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String welcomeScreen = 'welcome_screen';
@@ -15,6 +16,7 @@ class WelcomeScreen extends StatefulWidget {
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
+
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
@@ -33,6 +35,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     controller.addListener(() {
       setState(() {});
     });
+
+    Alarm.init();
   }
 
   @override

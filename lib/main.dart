@@ -11,12 +11,16 @@ void main() async {
   runApp(TaskManager());
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+
 class TaskManager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => MainEngine(),
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         initialRoute: WelcomeScreen.welcomeScreen,
         routes: {
           WelcomeScreen.welcomeScreen: (context) => const WelcomeScreen(),

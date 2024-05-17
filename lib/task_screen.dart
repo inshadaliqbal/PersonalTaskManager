@@ -22,7 +22,12 @@ class TaskScreen extends StatelessWidget {
           showModalBottomSheet(
               isScrollControlled: true,
               context: (context),
-              builder: (context) => BottomSheetWidget());
+              builder: (context) => BottomSheetWidget(
+                    title: '',
+                    description: '',
+                isReEdit: false,
+                docID: '',
+                  ));
         },
       ),
       backgroundColor: Color(0xFFFFF2E1),
@@ -31,21 +36,30 @@ class TaskScreen extends StatelessWidget {
           child: StreamBuilder<QuerySnapshot>(
               stream: Provider.of<MainEngine>(context).streamFirestoreSnapshot,
               builder: (context, snapshot) {
-                if (snapshot.hasData){
+                if (snapshot.hasData) {
                   var data = snapshot.data!.docs;
-                  print(snapshot.data!.docs[1].id);
                   return GridView.builder(
                     padding: const EdgeInsets.all(10),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
                     ),
                     itemCount: data.length,
                     itemBuilder: (context, index) {
-                      return TaskContainer(isDone: isDone,taskTitle: data[index]["tasktitle"],taskDesc: data[index]["taskdescription"],dateTime: data[index]["datetime"],);
+                      print(data[index].id);
+                      return TaskContainer(
+                        isDone: isDone,
+                        taskTitle: data[index]["tasktitle"],
+                        taskDesc: data[index]["taskdescription"],
+                        dateTime: data[index]["datetime"],
+                        dataID: data[index].id,
+                      );
                     },
                   );
+                } else {
+                  return Container();
                 }
                 return Container();
               }),
@@ -56,17 +70,36 @@ class TaskScreen extends StatelessWidget {
 }
 //
 
-
 class TaskContainer extends StatelessWidget {
   bool? isDone;
   String? taskTitle;
   Timestamp? dateTime;
   String? taskDesc;
-  TaskContainer({required this.isDone,required this.dateTime,required this.taskTitle,required this.taskDesc});
+  String? dataID;
+  TaskContainer(
+      {required this.isDone,
+      required this.dateTime,
+      required this.taskTitle,
+      required this.taskDesc,
+      required this.dataID});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: () {
+        Provider.of<MainEngine>(context, listen: false).deleteTask(dataID!);
+      },
+      onTap: () {
+        showModalBottomSheet(
+            isScrollControlled: true,
+            context: (context),
+            builder: (context) => BottomSheetWidget(
+                  title: taskTitle!,
+                  description: taskDesc!,
+                  docID: dataID!,
+                  isReEdit: true,
+                ));
+      },
       child: Container(
         constraints: BoxConstraints(
           minWidth: 150,
