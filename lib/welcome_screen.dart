@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-
+import 'provider_engine.dart';
+import 'package:provider/provider.dart';
 class WelcomeScreen extends StatefulWidget {
   static String welcomeScreen = 'welcome_screen';
   const WelcomeScreen({super.key});
@@ -22,8 +23,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(seconds: 2),
       vsync: this,
     );
-    animation =
-        ColorTween(begin: Colors.black, end: Colors.white).animate(controller);
+    animation = ColorTween(begin: Colors.white, end: Color(0xFFFFF2E1))
+        .animate(controller);
     controller.forward();
     controller.addListener(() {
       setState(() {});
@@ -39,6 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<MainEngine>(context).fireBaseInitialize();
     return Scaffold(
       backgroundColor: animation.value,
       body: CustomPaint(
@@ -48,6 +50,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Center(
+              child: Text(
+                'Personal Task Manager',
+                style: TextStyle(
+                    fontSize: 60,
+                    fontWeight: FontWeight.w200,
+                    color: Colors.black,
+                    fontFamily: 'sketch'),
+                textAlign: TextAlign.center,
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -109,18 +122,17 @@ class roundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-            10), // Adjust border radius as needed
+        borderRadius:
+            BorderRadius.circular(10), // Adjust border radius as needed
         boxShadow: [
           BoxShadow(
             color: Colors.black, // Shadow color
-            offset:
-            Offset(5, 5), // No offset in X and Y direction
+            offset: Offset(5, 5), // No offset in X and Y direction
             blurRadius: 0, // Adjust blur radius as needed
             spreadRadius:
-            0, // Negative spread radius to prevent spreading on the right and bottom sides
+                0, // Negative spread radius to prevent spreading on the right and bottom sides
           ),
         ],
       ),
@@ -140,12 +152,14 @@ class roundedButton extends StatelessWidget {
             ),
           ),
           minimumSize: MaterialStateProperty.all(
-              Size(300, 50),), // Set button size
+            Size(300, 50),
+          ), // Set button size
         ),
         onPressed: buttonDest,
         child: Text(
           buttonText!,
-          style: TextStyle(color: Colors.white, fontSize: 15.0, letterSpacing: 3),
+          style:
+              TextStyle(color: Colors.white, fontSize: 15.0, letterSpacing: 3),
         ),
       ),
     );

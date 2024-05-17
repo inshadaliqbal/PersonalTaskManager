@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:personaltaskmanager/provider_engine.dart';
 import 'package:personaltaskmanager/task_screen.dart';
+import 'package:provider/provider.dart';
 
 class Registration extends StatefulWidget {
   static String registrationScreen = 'registration_screen';
@@ -16,6 +19,7 @@ class _RegistrationState extends State<Registration> {
   String? password;
   bool? setSpinner = false;
   final _auth = FirebaseAuth.instance;
+  final _db = FirebaseFirestore.instance;
   @override
   void initState() {
     // TODO: implement initState
@@ -23,10 +27,9 @@ class _RegistrationState extends State<Registration> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
+      backgroundColor: Color(0xFFFFF2E1),
       body: ModalProgressHUD(
-        inAsyncCall: setSpinner!,
+        inAsyncCall: Provider.of<MainEngine>(context).spinnerValue,
         child: CustomPaint(
           // Adjust size as needed
           painter: DrawingBookPainter(),
@@ -224,24 +227,10 @@ class _RegistrationState extends State<Registration> {
                                 Size(300, 50)), // Set button size
                           ),
                           onPressed: () async {
-                            setState(() {
-                              setSpinner = true;
-                            });
-                            try {
-                              final newUser =
-                                  await _auth.createUserWithEmailAndPassword(
-                                      email: email!, password: password!);
-                              if (newUser != null) {
-                                print("Done");
-                                Navigator.pushNamed(
-                                    context, TaskScreen.taskScreen);
-                              }
+                            if (await Provider.of<MainEngine>(context,listen: false).userRegistration(email, password)){
+                              Navigator.pushNamed(context, TaskScreen.taskScreen);
 
-                              setState(() {
-                                setSpinner = false;
-                              });
-                            } catch (e) {
-                              print(e);
+                            }else{
                             }
                           },
                           child: Text(

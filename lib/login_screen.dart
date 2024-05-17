@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:personaltaskmanager/provider_engine.dart';
 import 'package:personaltaskmanager/task_screen.dart';
+import 'package:provider/provider.dart';
 
 final _auth = FirebaseAuth.instance;
 
@@ -16,13 +18,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String? email;
   String? password;
-  bool? setSpinner = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFFF2E1),
       body: ModalProgressHUD(
-        inAsyncCall: setSpinner!,
+        inAsyncCall: Provider.of<MainEngine>(context).spinnerValue,
         child: CustomPaint(// Adjust size as needed
           painter: DrawingBookPainter(),
           child: Center(
@@ -219,17 +220,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Size(300, 50)), // Set button size
                           ),
                           onPressed: () async {
-                            setState(() {
-                              setSpinner = true;
-                            });
-                            try {
-                              // await _auth.signInWithEmailAndPassword(email: email!, password: password!);
+                            if(await Provider.of<MainEngine>(context,listen: false).userSignIN(email, password)) {
                               Navigator.pushNamed(context, TaskScreen.taskScreen);
-                              setState(() {
-                                setSpinner = false;
-                              });
-                            } catch (e) {
-                              print(e);
+                            } else {
                             }
                           },
                           child: Text(
