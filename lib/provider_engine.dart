@@ -9,6 +9,7 @@ class MainEngine extends ChangeNotifier {
   FirebaseFirestore? _firestore;
   String? userEmail;
   bool spinnerValue = false;
+  var streamFirestoreSnapshot;
 
   void fireBaseInitialize() async {
     await Firebase.initializeApp(
@@ -51,13 +52,15 @@ class MainEngine extends ChangeNotifier {
       await _auth!.signInWithEmailAndPassword(email: email!, password: password!);
       userEmail = email;
       loadingSpinner(false);
-      return true;
+      updateSnapshot();
 
+      return true;
     }catch(e){
       print(e);
       loadingSpinner(false);
       return false;
     }
+
   }
 
 
@@ -76,21 +79,32 @@ class MainEngine extends ChangeNotifier {
           .doc(userEmail)
           .collection("tasks")
           .add(taskDetails);
+      updateSnapshot();
     }catch(e){
       print(e);
     }
     loadingSpinner(false);
-    final tasks = await _firestore!
+
+  }
+
+  void updateSnapshot() async {
+    streamFirestoreSnapshot = _firestore!
         .collection('users')
-        .doc("edmhack3r@gmail.com")
+        .doc("$userEmail")
         .collection("tasks")
         .snapshots();
+    notifyListeners();
+  }
 
-    await for (var snapshot in tasks) {
-      for (var task in snapshot.docs) {
-        print(task["tasktitle"]);
-      }
-    }
+  void deleteTask(int index)async{
+    var data = _firestore!
+        .collection('users')
+        .doc("$userEmail")
+        .collection("tasks").doc();
+
+    // data.
   }
 
 }
+
+
