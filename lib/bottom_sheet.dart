@@ -4,20 +4,25 @@ import 'package:personaltaskmanager/provider_engine.dart';
 import 'package:provider/provider.dart';
 import 'extracted_widgets.dart';
 import 'dart:math';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
 
 class BottomSheetWidget extends StatefulWidget {
   String title;
   String description;
   bool isReEdit;
   String docID;
-  BottomSheetWidget({super.key, required this.title,required this.description,required this.isReEdit,required this.docID});
+  BottomSheetWidget(
+      {super.key,
+      required this.title,
+      required this.description,
+      required this.isReEdit,
+      required this.docID});
 
   @override
   State<BottomSheetWidget> createState() => _BottomSheetWidgetState();
 }
 
 class _BottomSheetWidgetState extends State<BottomSheetWidget> {
-
   final _formKey = GlobalKey<FormState>();
 
   var _titleController = TextEditingController();
@@ -29,12 +34,13 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
     _titleController.text = widget.title;
     _descriptionController.text = widget.description;
   }
+
   @override
   Widget build(BuildContext context) {
-
     int? hourSelected;
     int? minuteSelected;
     String? zoneSelected;
+    DateTime? datePicked;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Form(
@@ -52,7 +58,6 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               decoration: InputDecoration(labelText: 'Task Description'),
             ),
             SizedBox(height: 20.0),
-            SizedBox(height: 20.0),
             DialWidgetAlarmSet(
               hourSetFunction: (value) {
                 hourSelected = value;
@@ -65,33 +70,46 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                 zoneSelected = zoneListSelect[value];
               },
             ),
+            MainButton(buttonText: 'Date', buttonOnPress: ()async{
+              datePicked = await DatePicker.showSimpleDatePicker(
+                context,
+                // initialDate: DateTime(2020),
+                firstDate: DateTime(2020),
+                lastDate: DateTime(2090),
+                dateFormat: "dd-MMMM-yyyy",
+                locale: DateTimePickerLocale.en_us,
+                looping: true,
+              );
+              print(datePicked);
+            }),
             MainButton(
               buttonText: 'Add Task',
               buttonOnPress: () {
-                if(widget.isReEdit){
-                  Provider.of<MainEngine>(context, listen: false).reEditTask(widget.docID,{
+                if (widget.isReEdit) {
+                  Provider.of<MainEngine>(context, listen: false)
+                      .reEditTask(widget.docID, {
                     "tasktitle": _titleController.text,
                     "taskdescription": _descriptionController.text,
                     "isdone": false,
                     "datetime": DateTime(
-                        DateTime.now().year,
-                        DateTime.august,
-                        DateTime.saturday,
+                        datePicked!.year,
+                        datePicked!.month,
+                        datePicked!.day,
                         hourSelected!,
                         minuteSelected!,
                         0,
                         0,
                         0)
                   });
-                }else{
+                } else {
                   Provider.of<MainEngine>(context, listen: false).addTask({
                     "tasktitle": _titleController.text,
                     "taskdescription": _descriptionController.text,
                     "isdone": false,
                     "datetime": DateTime(
-                        DateTime.now().year,
-                        DateTime.august,
-                        DateTime.saturday,
+                        datePicked!.year,
+                        datePicked!.month,
+                        datePicked!.day,
                         hourSelected!,
                         minuteSelected!,
                         0,

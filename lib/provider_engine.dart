@@ -1,3 +1,4 @@
+
 import 'package:alarm/model/alarm_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:personaltaskmanager/main.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:alarm/alarm.dart';
+import 'package:personaltaskmanager/reminder_page.dart';
 
 class MainEngine extends ChangeNotifier {
   FirebaseAuth? _auth;
@@ -181,6 +183,20 @@ class MainEngine extends ChangeNotifier {
         notificationBody: 'This is the body',
       );
       await Alarm.set(alarmSettings: alarmSettings);
+      Alarm.ringStream.stream.listen(
+        (_) {
+          navigatorKey.currentState!.push(
+            MaterialPageRoute(
+              builder: (context) {
+                return ReminderPage(
+                  functionForClose: () {},
+                  functionForSnooze: () {},
+                );
+              },
+            ),
+          );
+        },
+      );
     }
   }
 
