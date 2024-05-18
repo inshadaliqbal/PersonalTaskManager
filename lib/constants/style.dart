@@ -64,7 +64,7 @@ ButtonStyle kMainButtonStyle = ButtonStyle(
     ),
   ),
   minimumSize: MaterialStateProperty.all(
-    Size(300, 50),
+    const Size(300, 50),
   ),
 );
 
@@ -120,3 +120,20 @@ InputDecoration MainTextFieldInputDecoration(String? label) {
     const EdgeInsets.symmetric(horizontal: 10),
   );
 }
+
+BoxDecoration kTaskContainerBoxDecoration = BoxDecoration(
+  color: Colors.greenAccent.shade100,
+  borderRadius: BorderRadius.circular(10),
+  border: Border.all(
+    color: Colors.black,
+    width: 1,
+  ),
+  boxShadow: const [
+    BoxShadow(
+      color: Colors.black,
+      offset: Offset(3, 3),
+      blurRadius: 0,
+      spreadRadius: 0,
+    ),
+  ],
+);

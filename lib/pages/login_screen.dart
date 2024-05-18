@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:personaltaskmanager/buttons.dart';
-import 'package:personaltaskmanager/constants.dart';
-import 'package:personaltaskmanager/provider_engine.dart';
+import 'package:personaltaskmanager/widgets/buttons.dart';
+import 'package:personaltaskmanager/constants/constants.dart';
+import 'package:personaltaskmanager/widgets/extracted_widgets.dart';
+import '../constants/style.dart';
+import 'package:personaltaskmanager/helpers/provider_engine.dart';
+import 'package:personaltaskmanager/pages/task_screen.dart';
 import 'package:provider/provider.dart';
-import 'style.dart';
-import 'task_screen.dart';
-import 'extracted_widgets.dart';
 
-class Registration extends StatefulWidget {
-  static String registrationScreen = 'registration_screen';
-  const Registration({super.key});
+class LoginScreen extends StatefulWidget {
+  static String loginScreen = 'login_screen';
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<Registration> createState() => _RegistrationState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegistrationState extends State<Registration> {
+class _LoginScreenState extends State<LoginScreen> {
   String? email;
   String? password;
-  bool? setSpinner = false;
-  @override
-  void initState() {
-    // TODO: implement initState
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF2E1),
       body: ModalProgressHUD(
+        // Display spinner if there's an ongoing operation
         inAsyncCall: Provider.of<MainEngine>(context).spinnerValue,
         child: SquareBGCustomPaint(
           child: Center(
@@ -42,8 +39,8 @@ class _RegistrationState extends State<Registration> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(
-                        child:
-                            Text('Welcome...', style: kRegistrationPageTitle),
+                        child: Text('Welcome Back',
+                            style: kLoginPageTitleTextStyle),
                       ),
                       Flexible(
                         fit: FlexFit.loose,
@@ -64,23 +61,26 @@ class _RegistrationState extends State<Registration> {
                           label: 'EMAIL',
                           changeFunction: (value) {
                             email = value;
+                            print(value);
                           }),
-                      MainTextField(
+                      MainTextFieldPassword(
                           label: 'PASSWORD',
                           changeFunction: (value) {
                             password = value;
                           }),
                     ],
                   ),
+                  // Button for logging in
                   MainButton(
-                      buttonText: 'REGISTER',
-                      buttonOnPress: () async {
-                        if (await Provider.of<MainEngine>(context,
-                                listen: false)
-                            .userRegistration(email, password)) {
-                          Navigator.pushNamed(context, TaskScreen.taskScreen);
-                        } else {}
-                      }),
+                    buttonColor: Colors.blueAccent.shade200,
+                    buttonText: 'LOG IN',
+                    buttonOnPress: () async {
+                      if (await Provider.of<MainEngine>(context, listen: false)
+                          .userSignIN(email, password)) {
+                        Navigator.pushNamed(context, TaskScreen.taskScreen);
+                      } else {}
+                    },
+                  ),
                 ],
               ),
             ),

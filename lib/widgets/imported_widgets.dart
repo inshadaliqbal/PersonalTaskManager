@@ -49,25 +49,25 @@ class _RotatableDial1State extends State<RotatableDial1> {
         height: 300.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(0xFF8FEADD),
+          color: const Color(0xFF897A74),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 2,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(
+            const Positioned(
               bottom: 20,
               child: Icon(
                 Icons.arrow_circle_down,
                 size: 20.0,
-                color: Colors.black, // Change arrow color
+                color: Colors.white, // Change arrow color
               ),
             ),
             ...List.generate(totalNumbers, (index) {
@@ -86,9 +86,9 @@ class _RotatableDial1State extends State<RotatableDial1> {
                   child: Center(
                     child: Text(
                       '${index + 1 == 60 ? index = 00 : index + 1}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 7.0,
-                        color: Colors.black, // Change number text color
+                        color: Colors.white, // Change number text color
                       ),
                     ),
                   ),
@@ -100,21 +100,6 @@ class _RotatableDial1State extends State<RotatableDial1> {
       ),
     );
   }
-// //
-// int updateSelectedNumber() {
-//   double adjustedRotation = (dialRotation - math.pi / 2) % (2 * math.pi);
-//   if (adjustedRotation < 0) {
-//     adjustedRotation += 2 * math.pi;
-//   }
-//
-//   double angleUnit = (2 * math.pi) / totalNumbers;
-//   int index = ((adjustedRotation + angleUnit / 2) % (2 * math.pi) ~/ angleUnit) % totalNumbers;
-//   setState(() {
-//     selectedNumber = (index + totalNumbers) % totalNumbers + 1;
-//   });
-//   print(selectedNumber);
-//   return selectedNumber;
-// }
 }
 
 class RotatableDial extends StatefulWidget {
@@ -127,7 +112,7 @@ class RotatableDial extends StatefulWidget {
 class _RotatableDialState extends State<RotatableDial> {
   double dialRotation = 0.0;
   int selectedNumber = 0;
-  final int totalNumbers = 12; // Change to 12 for 12 numbers
+  final int totalNumbers = 24; // Change to 12 for 12 numbers
 
   @override
   Widget build(BuildContext context) {
@@ -159,25 +144,25 @@ class _RotatableDialState extends State<RotatableDial> {
         height: 200.0,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(0xFF8FEADD),
+          color: const Color(0xFF897A74),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 1,
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Positioned(
+            const Positioned(
               bottom: 25,
               child: Icon(
                 Icons.arrow_circle_down,
                 size: 20.0,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             ...List.generate(totalNumbers, (index) {
@@ -196,9 +181,9 @@ class _RotatableDialState extends State<RotatableDial> {
                   child: Center(
                     child: Text(
                       '${index + 1}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
-                        color: Colors.black, // Change number text color
+                        color: Colors.white, // Change number text color
                       ),
                     ),
                   ),

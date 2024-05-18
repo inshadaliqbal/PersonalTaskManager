@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 const kWelcomePageMainTitle = TextStyle(
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: FontWeight.w200,
     color: Colors.black,
     fontFamily: 'sketch');
 
 const kMainPageAnimationTextStyle = TextStyle(
-  fontSize: 50.0,
+  fontSize: 40.0,
+  color: Colors.black,
   fontWeight: FontWeight.w800,
   fontFamily: 'Canterbury',
 );

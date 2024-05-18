@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personaltaskmanager/constants.dart';
-import 'style.dart';
+import 'package:personaltaskmanager/constants/constants.dart';
+import '../constants/style.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -16,7 +16,7 @@ class MainButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: kMainButtonContainerDecoration,
       child: TextButton(
-        style: kMainButtonStyle,
+        style: kMainButtonStyle.copyWith(backgroundColor: MaterialStatePropertyAll(buttonColor)),
         onPressed: () {
           buttonOnPress();
         },
@@ -32,13 +32,13 @@ class MainButton extends StatelessWidget {
 
 
 class TaskContainerButton extends StatelessWidget {
-  const TaskContainerButton({
+  TaskContainerButton({
     super.key,
     required this.isActiveValue,
     required this.onChangedFunction,
   });
 
-  final bool isActiveValue;
+  bool? isActiveValue;
   final Function onChangedFunction;
 
   @override
@@ -47,7 +47,7 @@ class TaskContainerButton extends StatelessWidget {
         trackColor: Colors.white38,
         thumbColor: Colors.blueGrey,
         activeColor: Colors.white,
-        value: isActiveValue,
+        value: isActiveValue!,
         onChanged: (bool newValue) {
           onChangedFunction();
         });
