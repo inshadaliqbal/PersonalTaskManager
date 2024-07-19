@@ -76,10 +76,10 @@ class TaskScreen extends StatelessWidget {
                       isScrollControlled: true,
                       context: (context),
                       builder: (context) => BottomSheetWidget(
-                        title: '',
-                        description: '',
+                        title: ' ',
+                        description: ' ',
                         isReEdit: false,
-                        docID: '',
+                        docID: ' ',
                       ),
                     );
                   },
