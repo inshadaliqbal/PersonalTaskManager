@@ -63,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               padding: EdgeInsets.symmetric(vertical: 30),
               child: Center(
                 child: Text(
-                  'Personal \nTask Manager',
+                  'Personal \nTask Manager. ',
                   style: kWelcomePageMainTitle,
                   textAlign: TextAlign.center,
                 ),
