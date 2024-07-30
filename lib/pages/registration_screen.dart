@@ -51,7 +51,7 @@ class _RegistrationState extends State<Registration> {
                     Flexible(
                       fit: FlexFit.loose,
                       child: Hero(
-                        tag: 'logo',
+                        tag: 'logo ',
                         child: Icon(
                           Icons.task_sharp,
                           size: 50,
