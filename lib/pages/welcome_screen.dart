@@ -78,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             MainButton(
               buttonColor: Colors.blueAccent.shade200,
-              buttonText: 'REGISTER',
+              buttonText: 'Register  ',
               buttonOnPress: () {
                 Navigator.pushNamed(context, Registration.registrationScreen);
               },
