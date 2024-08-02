@@ -69,7 +69,7 @@ class TaskScreen extends StatelessWidget {
                 ),
                 MainButton(
                   buttonColor: Colors.blueAccent.shade200,
-                  buttonText: "Add Task. ",
+                  buttonText: "Add Task",
                   buttonOnPress: () {
                     // Show bottom sheet for adding new task
                     showModalBottomSheet(
