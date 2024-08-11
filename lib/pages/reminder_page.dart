@@ -101,7 +101,7 @@ class ReminderPage extends StatelessWidget {
                                 ),
                               ),
                               const Text(
-                                "Stop ",
+                                "Stop  ",
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.black),
                               ),
